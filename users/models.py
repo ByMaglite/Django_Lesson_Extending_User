@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
 
         if not email:
-            raise ValueError('Email is mandatory')
+            raise ValueError('Email field is mandatory')
         # if not username:
         #     raise ValueError('Users must have a username')
         email = self.normalize_email(email)
@@ -28,8 +28,10 @@ class CustomUserManager(BaseUserManager):
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_active') is not True:
+            raise ValueError('Superuser must have is_active=True.')
         if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+            raise ValueError('Superuser must have is_active=True.')
         return self.create_user(email, password, **extra_fields)
 
 
